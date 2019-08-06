@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LastFM</string>
+    <string name="API_KEY">3538cd7d5d021b35b551ccbe4ba9e9fe</string>
 </resources>
