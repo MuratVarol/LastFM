@@ -7,6 +7,7 @@ import com.readystatesoftware.chuck.ChuckInterceptor
 import com.varol.lastfm.BASE_LINK
 import com.varol.lastfm.remote.Api
 import com.varol.lastfm.util.network.CacheInterceptor
+import com.varol.lastfm.util.network.RequestInterceptor
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -26,9 +27,10 @@ private const val CLIENT_CACHE_DIRECTORY = "http"
 val networkModule = module {
     single { createCache(androidContext()) }
     single { createChuckInterceptor(androidContext()) }
+    single { createRequestInterceptor(androidContext()) }
     single { createCacheInterceptor() }
     single(name = "baseUrl") { getBaseUrl() }
-    single { createOkHttpClient(get(), get(), get()) }
+    single { createOkHttpClient(get(), get(), get(), get()) }
     single { createGson() }
     single { createWebService<Api>(get(), get(), get(name = "baseUrl")) }
 
@@ -69,17 +71,26 @@ fun createCacheInterceptor(): CacheInterceptor {
 }
 
 /**
+ * returns CacheInterceptor
+ */
+fun createRequestInterceptor(context: Context): RequestInterceptor {
+    return RequestInterceptor(context)
+}
+
+/**
  * Create OkHttp client with required interceptors and defined timeouts
  */
 fun createOkHttpClient(
     cache: Cache,
     chuckInterceptor: ChuckInterceptor,
-    cacheInterceptor: CacheInterceptor
+    cacheInterceptor: CacheInterceptor,
+    requestInterceptor: RequestInterceptor
 ): OkHttpClient {
     val okHttpBuilder = OkHttpClient.Builder()
     okHttpBuilder
         .addInterceptor(chuckInterceptor)
         .addInterceptor(cacheInterceptor)
+        .addInterceptor(requestInterceptor)
         .connectTimeout(CLIENT_TIME_OUT, TimeUnit.SECONDS)
         .writeTimeout(CLIENT_TIME_OUT, TimeUnit.SECONDS)
         .readTimeout(CLIENT_TIME_OUT, TimeUnit.SECONDS)
