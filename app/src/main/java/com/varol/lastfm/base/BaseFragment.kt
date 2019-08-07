@@ -19,7 +19,7 @@ abstract class BaseFragment<out VM : ViewModel, DB : ViewDataBinding>(viewModelC
     //no need for ViewModelProviders
     val viewModel: VM by viewModelByClass(viewModelClass)
 
-    private lateinit var binding: DB
+    lateinit var binding: DB
 
     abstract val getLayoutId: Int
 
