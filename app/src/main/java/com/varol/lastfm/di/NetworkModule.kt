@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.readystatesoftware.chuck.ChuckInterceptor
 import com.varol.lastfm.BASE_LINK
-import com.varol.lastfm.remote.Api
+import com.varol.lastfm.data.remote.Api
 import com.varol.lastfm.util.network.CacheInterceptor
 import com.varol.lastfm.util.network.RequestInterceptor
 import io.reactivex.schedulers.Schedulers
@@ -71,7 +71,7 @@ fun createCacheInterceptor(): CacheInterceptor {
 }
 
 /**
- * returns CacheInterceptor
+ * returns RequestInterceptor
  */
 fun createRequestInterceptor(context: Context): RequestInterceptor {
     return RequestInterceptor(context)
