@@ -16,7 +16,10 @@ class MainApplication : Application() {
             this,
             listOf(
                 appModule,
-                networkModule
+                networkModule,
+                repositoryModule,
+                useCaseModule,
+                viewModelModule
             )
         )
     }
