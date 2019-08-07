@@ -2,6 +2,7 @@ package com.varol.lastfm.di
 
 import android.content.Context
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.readystatesoftware.chuck.ChuckInterceptor
 import com.varol.lastfm.BASE_LINK
@@ -50,9 +51,13 @@ fun createCache(context: Context): Cache = Cache(
 
 /**
  * returns Gson parser
+ *
+ * added setLenient() method to prevent "malformed json exception"
  */
 fun createGson(): Gson {
-    return Gson()
+    return GsonBuilder()
+        .setLenient()
+        .create()
 }
 
 /**

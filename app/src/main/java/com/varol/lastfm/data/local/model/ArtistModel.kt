@@ -11,6 +11,6 @@ data class ArtistModel(
     val mbid : String?,
 
     @SerializedName("image")
-    val image:  ImageModel
+    val image: List<ImageModel>
 
 )

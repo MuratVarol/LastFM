@@ -7,6 +7,8 @@ import okhttp3.Response
 
 private const val API_KEY_QUERY = "api_key"
 private const val LIMIT_QUERY = "limit"
+private const val FORMAT_QUERY = "format"
+private const val FORMAT_VALUE = "json"
 
 private const val LIMIT = 10.toString()
 
@@ -22,6 +24,7 @@ class RequestInterceptor(val context: Context) : Interceptor {
         val httpUrl = request.url().newBuilder()
             .addQueryParameter(API_KEY_QUERY, apiKeyValue)
             .addQueryParameter(LIMIT_QUERY, LIMIT)
+            .addQueryParameter(FORMAT_QUERY, FORMAT_VALUE)
             .build()
         request = request.newBuilder().url(httpUrl).build()
 
