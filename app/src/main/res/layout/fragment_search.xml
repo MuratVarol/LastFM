@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.varol.lastfm.viewmodel.SearchArtistsVM" />
+            type="com.varol.lastfm.viewmodel.ArtistsVM" />
 
     </data>
 
