@@ -68,6 +68,10 @@ dependencies {
     implementation deps.glide.main
     kapt deps.glide.compiler
 
+    implementation deps.room.base
+    implementation deps.room.rxJava
+    kapt deps.room.compiler
+
     releaseImplementation deps.chuckOkHttp.release
     debugImplementation deps.chuckOkHttp.debug
 
