@@ -10,8 +10,11 @@ data class AlbumWithTracksModel(
     @SerializedName("mbid")
     val mbid : String?,
 
+    @SerializedName("artist")
+    val artist: String?,
+
     @SerializedName("image")
-    val image: ImageModel,
+    val image: List<ImageModel>,
 
     @SerializedName("tracks")
     val tracks: TrackList?

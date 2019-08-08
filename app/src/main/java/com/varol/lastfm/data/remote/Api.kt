@@ -10,4 +10,15 @@ interface Api {
     fun getSources(
         @Query(value = "artist") artist: String
     ): Single<BaseArtistResponse>
+
+    @GET("?method=artist.gettopalbums")
+    fun getTopTracks(
+        @Query(value = "artist") artist: String
+    ): Single<BaseAlbumsResponse>
+
+    @GET("?method=album.getinfo")
+    fun getAlbumDetail(
+        @Query(value = "album") album: String,
+        @Query(value = "artist") artist: String
+    ): Single<BaseTracksResponse>
 }

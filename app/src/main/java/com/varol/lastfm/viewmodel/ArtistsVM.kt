@@ -10,7 +10,7 @@ import com.varol.lastfm.usecase.SearchArtistUseCase
 import com.varol.lastfm.util.listener.ItemClickListener
 
 
-class SearchArtistsVM(
+class ArtistsVM(
     private val searchArtistUseCase: SearchArtistUseCase
 ) : BaseVM() {
 
