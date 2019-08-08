@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.varol.lastfm.viewmodel.StoredAlbumsVM" />
+            type="com.varol.lastfm.viewmodel.AlbumsVM" />
 
     </data>
 
