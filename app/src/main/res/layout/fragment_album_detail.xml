@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.varol.lastfm.viewmodel.AlbumsVM" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/tv_track_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.selectedAlbum.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Du Hast" />
+
+        <ImageView
+            android:id="@+id/iv_poster"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{viewModel.selectedAlbum.image[3].text}"
+            app:layout_constraintDimensionRatio="4:5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_track_name"
+            tools:srcCompat="@tools:sample/avatars[0]" />
+
+        <TextView
+            android:id="@+id/tv_track_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.selectedAlbum.artist}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_poster"
+            tools:text="Ramsstein" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_news"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:itemLayoutId="@{@layout/item_tracklist_layout}"
+            app:itemList="@{viewModel.selectedAlbum.tracks.track}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_track_artist"
+            tools:listitem="@layout/item_tracklist_layout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
