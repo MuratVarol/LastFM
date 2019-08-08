@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import com.varol.lastfm.R
 import com.varol.lastfm.base.BaseFragment
 import com.varol.lastfm.databinding.FragmentStoredAlbumsBinding
-import com.varol.lastfm.viewmodel.StoredAlbumsVM
+import com.varol.lastfm.viewmodel.AlbumsVM
 
 class StoredAlbumsFragment :
-    BaseFragment<StoredAlbumsVM, FragmentStoredAlbumsBinding>(StoredAlbumsVM::class) {
+    BaseFragment<AlbumsVM, FragmentStoredAlbumsBinding>(AlbumsVM::class) {
     override val getLayoutId: Int = R.layout.fragment_stored_albums
 
 

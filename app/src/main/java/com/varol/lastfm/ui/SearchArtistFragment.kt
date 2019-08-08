@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import com.varol.lastfm.R
 import com.varol.lastfm.base.BaseFragment
 import com.varol.lastfm.databinding.FragmentSearchBinding
-import com.varol.lastfm.viewmodel.SearchArtistsVM
+import com.varol.lastfm.viewmodel.ArtistsVM
 
 class SearchArtistFragment :
-    BaseFragment<SearchArtistsVM, FragmentSearchBinding>(SearchArtistsVM::class) {
+    BaseFragment<ArtistsVM, FragmentSearchBinding>(ArtistsVM::class) {
     override val getLayoutId: Int = R.layout.fragment_search
 
 
