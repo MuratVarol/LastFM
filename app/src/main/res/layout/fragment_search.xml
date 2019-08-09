@@ -25,18 +25,25 @@
             android:id="@+id/edt_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1"
             android:text="@={viewModel.searchText}"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:singleLine="true"
+            app:layout_constraintEnd_toStartOf="@+id/iv_search"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="Cherry" />
 
         <ImageView
             android:id="@+id/iv_search"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:onClick="@{() -> viewModel.searchArtist()}"
             android:src="@drawable/chuck_ic_https_grey_24dp"
+            app:layout_constraintBottom_toTopOf="@+id/rv_news"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/edt_search"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
