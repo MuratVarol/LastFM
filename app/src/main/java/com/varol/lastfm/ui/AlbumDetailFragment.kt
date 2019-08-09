@@ -10,6 +10,9 @@ import com.varol.lastfm.data.local.model.AlbumSearchModel
 import com.varol.lastfm.databinding.FragmentAlbumDetailBinding
 import com.varol.lastfm.viewmodel.AlbumsVM
 
+
+const val KEY_ALBUM_INFO = "key.info.album"
+
 class AlbumDetailFragment :
     BaseFragment<AlbumsVM, FragmentAlbumDetailBinding>(AlbumsVM::class) {
     override val getLayoutId: Int = R.layout.fragment_album_detail
@@ -22,9 +25,27 @@ class AlbumDetailFragment :
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        viewModel.getAlbumDetail(AlbumSearchModel("cher", "believe"))
+        getSelectedAlbum()?.let { album ->
+            viewModel.getAlbumDetail(AlbumSearchModel(album.artist, album.albumName))
+        }
 
         return binding.root
     }
+
+    companion object {
+
+        fun newInstance(albumSearchModel: AlbumSearchModel): AlbumDetailFragment {
+            val args = Bundle()
+            args.putParcelable(KEY_ALBUM_INFO, albumSearchModel)
+            return AlbumDetailFragment().apply {
+                arguments = args
+            }
+        }
+
+    }
+
+
+    private fun getSelectedAlbum(): AlbumSearchModel? =
+        arguments?.getParcelable(KEY_ALBUM_INFO)
 
 }

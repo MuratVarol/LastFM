@@ -8,6 +8,7 @@ import com.varol.lastfm.R
 import com.varol.lastfm.base.BaseFragment
 import com.varol.lastfm.databinding.FragmentSearchBinding
 import com.varol.lastfm.viewmodel.ArtistsVM
+import observe
 
 class SearchArtistFragment :
     BaseFragment<ArtistsVM, FragmentSearchBinding>(ArtistsVM::class) {
@@ -21,7 +22,18 @@ class SearchArtistFragment :
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
+        subscribeSelectedArtist()
+
         return binding.root
+    }
+
+    private fun subscribeSelectedArtist() {
+        viewModel.selectedArtist.observe(this) { artistModel ->
+            artistModel?.let { artist ->
+                val topAlbumDetailFragment = TopAlbumsFragment.newInstance(artist)
+                loadFragment(R.id.container_main, topAlbumDetailFragment, fragmentManager, true)
+            }
+        }
     }
 
 }

@@ -1,6 +1,5 @@
 package com.varol.lastfm.viewmodel
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.varol.lastfm.base.BaseVM
@@ -18,9 +17,11 @@ class ArtistsVM(
 
     val artistSearchList = MutableLiveData<List<ArtistModel>>()
 
+    val selectedArtist = MutableLiveData<String>()
+
     val itemClickListener = object : ItemClickListener<ArtistModel> {
         override fun onItemClick(view: View, item: ArtistModel, position: Int) {
-            Log.i("ArtistModel: ", item.toString())
+            selectedArtist.postValue(item.name)
         }
 
     }
@@ -38,6 +39,7 @@ class ArtistsVM(
                             artistSearchList.postValue(data.data.results.artistmatches.artist)
                         }
                         else -> {
+                            errorMessage.postValue("Search Failed")
                         }
                     }
                 }
