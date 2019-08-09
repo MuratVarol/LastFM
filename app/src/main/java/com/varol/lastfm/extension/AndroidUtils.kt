@@ -22,3 +22,13 @@ fun Fragment.debugToast(message: CharSequence) {
     if (BuildConfig.DEBUG)
         Toast.makeText(this.context, message, Toast.LENGTH_LONG).show()
 }
+
+/**
+ * Execute method if given args are not null
+ * @param closure
+ */
+inline fun <T : Any> ifLet(vararg elements: T?, closure: (List<T>) -> Unit) {
+    if (elements.all { it != null }) {
+        closure(elements.filterNotNull())
+    }
+}
