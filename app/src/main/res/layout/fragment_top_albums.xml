@@ -22,7 +22,7 @@
         >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_news"
+            android:id="@+id/rv_albums"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:itemClickListener="@{viewModel.albumSelectListener}"

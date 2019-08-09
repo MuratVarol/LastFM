@@ -25,9 +25,9 @@
             android:id="@+id/edt_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@={viewModel.searchText}"
             android:inputType="text"
             android:maxLines="1"
-            android:text="@={viewModel.searchText}"
             android:singleLine="true"
             app:layout_constraintEnd_toStartOf="@+id/iv_search"
             app:layout_constraintHorizontal_bias="0.5"
@@ -41,27 +41,38 @@
             android:layout_height="40dp"
             android:onClick="@{() -> viewModel.searchArtist()}"
             android:src="@drawable/chuck_ic_https_grey_24dp"
-            app:layout_constraintBottom_toTopOf="@+id/rv_news"
+            android:focusable="true"
+            app:layout_constraintBottom_toTopOf="@+id/rv_artists"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/edt_search"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_news"
+            android:id="@+id/rv_artists"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:itemClickListener="@{viewModel.itemClickListener}"
             app:itemLayoutId="@{@layout/item_search_layout}"
             app:itemList="@{viewModel.artistSearchList}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_search"
-            app:spanCount="2"
             tools:listitem="@layout/item_search_layout"
 
             />
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
