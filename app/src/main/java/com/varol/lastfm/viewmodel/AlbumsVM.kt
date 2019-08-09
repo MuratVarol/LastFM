@@ -9,6 +9,7 @@ import com.varol.lastfm.data.local.model.AlbumSearchModel
 import com.varol.lastfm.data.local.model.AlbumWithTracksModel
 import com.varol.lastfm.data.remote.DataHolder
 import com.varol.lastfm.usecase.TopAlbumsUseCase
+import com.varol.lastfm.util.binding_adapters.SingleLiveEvent
 import com.varol.lastfm.util.listener.ItemClickListener
 
 
@@ -21,6 +22,8 @@ class AlbumsVM(
 
     val albumDetail = MutableLiveData<AlbumWithTracksModel>()
     val selectedAlbum = MutableLiveData<AlbumModel>()
+
+    val isLoading = SingleLiveEvent<Boolean>()
 
     val itemClickListener = object : ItemClickListener<AlbumModel> {
         override fun onItemClick(view: View, item: AlbumModel, position: Int) {
@@ -35,12 +38,13 @@ class AlbumsVM(
     }
 
     fun getTopAlbums(artist: String) {
-
+        isLoading.postValue(true)
         val disposable = getTopAlbumsUseCase
             .getTopAlbums(artist)
             .observeOn(getBackgroundScheduler())
             .subscribeOn(getBackgroundScheduler())
             .subscribe { data ->
+                isLoading.postValue(false)
                 when (data) {
                     is DataHolder.Success -> {
                         albumList.postValue(data.data.topalbums.albums)
@@ -55,11 +59,16 @@ class AlbumsVM(
 
     fun getAlbumDetail(albumSearch: AlbumSearchModel) {
 
+        isLoading.postValue(true)
+
         val disposable = getTopAlbumsUseCase
             .getAlbumDetail(albumSearch)
             .observeOn(getBackgroundScheduler())
             .subscribeOn(getBackgroundScheduler())
             .subscribe { data ->
+
+                isLoading.postValue(false)
+
                 when (data) {
                     is DataHolder.Success -> {
                         albumDetail.postValue(data.data.album)
