@@ -13,6 +13,6 @@ data class BaseArtistResponse(
     val message: String?,
 
     @SerializedName("results")
-    val results: ResultModel
+    val results: ResultModel?
 
 )
