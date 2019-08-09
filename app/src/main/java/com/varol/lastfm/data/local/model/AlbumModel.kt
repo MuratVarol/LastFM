@@ -11,9 +11,13 @@ data class AlbumModel(
     val mbid: String?,
 
     @SerializedName("image")
-    val image: List<ImageModel>,
+    val image: List<ImageModel?>?,
 
     @SerializedName("artist")
     val artist: ArtistModel
 
-)
+) {
+    // Get biggest not null image url
+    val imageUrl: String?
+        get() = image?.filterNotNull()?.last()?.text
+}
