@@ -25,7 +25,7 @@
             android:id="@+id/rv_news"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:itemClickListener="@{viewModel.itemClickListener}"
+            app:itemClickListener="@{viewModel.albumSelectListener}"
             app:itemLayoutId="@{@layout/item_album_layout}"
             app:itemList="@{viewModel.albumList}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
