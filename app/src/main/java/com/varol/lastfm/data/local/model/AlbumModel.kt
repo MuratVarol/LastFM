@@ -11,6 +11,9 @@ data class AlbumModel(
     val mbid: String?,
 
     @SerializedName("image")
-    val image: List<ImageModel>
+    val image: List<ImageModel>,
+
+    @SerializedName("artist")
+    val artist: ArtistModel
 
 )
