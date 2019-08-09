@@ -13,13 +13,13 @@ class AlbumRepository(private val api: Api) : BaseRepository() {
 
     fun getTopAlbums(artist: String): Single<DataHolder<BaseAlbumsResponse>> {
         return service.sendRequest(
-            api.getTopTracks(artist)
+            api.getTopAlbums(artist)
         )
     }
 
     fun getAlbumInfo(albumSearch: AlbumSearchModel): Single<DataHolder<BaseTracksResponse>> {
         return service.sendRequest(
-            api.getAlbumDetail(albumSearch.album, albumSearch.artist)
+            api.getAlbumDetail(albumSearch.albumName, albumSearch.artist)
         )
     }
 

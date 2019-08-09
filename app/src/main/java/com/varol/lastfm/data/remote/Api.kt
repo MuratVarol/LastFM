@@ -12,7 +12,7 @@ interface Api {
     ): Single<BaseArtistResponse>
 
     @GET("?method=artist.gettopalbums")
-    fun getTopTracks(
+    fun getTopAlbums(
         @Query(value = "artist") artist: String
     ): Single<BaseAlbumsResponse>
 
