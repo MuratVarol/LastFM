@@ -19,13 +19,19 @@ class AlbumsVM(
 
     val albumList = MutableLiveData<List<AlbumModel>>()
 
-    val selectedAlbum = MutableLiveData<AlbumWithTracksModel>()
+    val albumDetail = MutableLiveData<AlbumWithTracksModel>()
+    val selectedAlbum = MutableLiveData<AlbumModel>()
 
     val itemClickListener = object : ItemClickListener<AlbumModel> {
         override fun onItemClick(view: View, item: AlbumModel, position: Int) {
             Log.i("AlbumModel: ", item.toString())
         }
+    }
 
+    val albumSelectListener = object : ItemClickListener<AlbumModel> {
+        override fun onItemClick(view: View, item: AlbumModel, position: Int) {
+            selectedAlbum.postValue(item)
+        }
     }
 
     fun getTopAlbums(artist: String) {
@@ -56,7 +62,7 @@ class AlbumsVM(
             .subscribe { data ->
                 when (data) {
                     is DataHolder.Success -> {
-                        selectedAlbum.postValue(data.data.album)
+                        albumDetail.postValue(data.data.album)
                     }
                     else -> {
                     }
