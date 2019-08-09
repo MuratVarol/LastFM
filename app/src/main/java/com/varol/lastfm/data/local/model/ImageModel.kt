@@ -1,7 +1,10 @@
 package com.varol.lastfm.data.local.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class ImageModel(
 
     @SerializedName("#text")
@@ -10,4 +13,4 @@ data class ImageModel(
     @SerializedName("size")
     val size : String?
 
-)
+) : Parcelable

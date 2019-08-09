@@ -1,7 +1,10 @@
 package com.varol.lastfm.data.local.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class AlbumWithTracksModel(
 
     @SerializedName("name")
@@ -19,4 +22,4 @@ data class AlbumWithTracksModel(
     @SerializedName("tracks")
     val tracks: TrackList?
 
-)
+) : Parcelable
