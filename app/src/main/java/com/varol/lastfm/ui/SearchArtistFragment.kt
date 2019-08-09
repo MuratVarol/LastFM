@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.varol.lastfm.R
 import com.varol.lastfm.base.BaseFragment
 import com.varol.lastfm.databinding.FragmentSearchBinding
+import com.varol.lastfm.util.listener.EndlessRecyclerViewScrollListener
 import com.varol.lastfm.viewmodel.ArtistsVM
 import observe
 
@@ -23,6 +26,15 @@ class SearchArtistFragment :
         super.onCreateView(inflater, container, savedInstanceState)
 
         subscribeSelectedArtist()
+
+
+        val layoutManager = binding.rvArtists.layoutManager as GridLayoutManager
+        binding.rvArtists.addOnScrollListener(object :
+            EndlessRecyclerViewScrollListener(layoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                viewModel.searchArtist(page)
+            }
+        })
 
         return binding.root
     }

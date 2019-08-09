@@ -9,9 +9,9 @@ import io.reactivex.Single
 
 class ArtistRepository(private val api: Api) : BaseRepository() {
 
-    fun searchArtist(query: String): Single<DataHolder<BaseArtistResponse>> {
+    fun searchArtist(query: String, pageIndex: Int): Single<DataHolder<BaseArtistResponse>> {
         return service.sendRequest(
-            api.getSources(query)
+            api.getArtists(query, pageIndex)
         )
     }
 

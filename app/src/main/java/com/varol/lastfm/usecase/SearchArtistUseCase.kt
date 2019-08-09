@@ -8,7 +8,7 @@ import io.reactivex.Single
 class SearchArtistUseCase(
     private val artistRepository: ArtistRepository
 ) {
-    fun searchArtist(query: String): Single<DataHolder<BaseArtistResponse>> {
-        return artistRepository.searchArtist(query)
+    fun searchArtist(query: String, pageIndex: Int): Single<DataHolder<BaseArtistResponse>> {
+        return artistRepository.searchArtist(query, pageIndex)
     }
 }

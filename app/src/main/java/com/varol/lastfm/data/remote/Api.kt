@@ -7,8 +7,9 @@ import retrofit2.http.Query
 interface Api {
 
     @GET("?method=artist.search")
-    fun getSources(
-        @Query(value = "artist") artist: String
+    fun getArtists(
+        @Query(value = "artist") artist: String,
+        @Query(value = "page") page: Int
     ): Single<BaseArtistResponse>
 
     @GET("?method=artist.gettopalbums")
