@@ -6,5 +6,6 @@
     <!--    SCREEN TEXTS    -->
 
     <string name="search_failed">Search Failed!</string>
+    <string name="failed_album_fetch">Getting Album Informartion Failed!</string>
 
 </resources>

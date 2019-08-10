@@ -7,4 +7,5 @@ class GetStringsUseCase(
     private val context: Context
 ) {
     fun getSearchFailedString() = context.getString(R.string.search_failed)
+    fun getFailedToGetAlbumString() = context.getString(R.string.failed_album_fetch)
 }

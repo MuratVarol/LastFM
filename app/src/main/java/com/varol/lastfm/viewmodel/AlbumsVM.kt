@@ -8,13 +8,15 @@ import com.varol.lastfm.data.local.model.AlbumModel
 import com.varol.lastfm.data.local.model.AlbumSearchModel
 import com.varol.lastfm.data.local.model.AlbumWithTracksModel
 import com.varol.lastfm.data.remote.DataHolder
+import com.varol.lastfm.usecase.GetStringsUseCase
 import com.varol.lastfm.usecase.TopAlbumsUseCase
 import com.varol.lastfm.util.binding_adapters.SingleLiveEvent
 import com.varol.lastfm.util.listener.ItemClickListener
 
 
 class AlbumsVM(
-    private val getTopAlbumsUseCase: TopAlbumsUseCase
+    private val getTopAlbumsUseCase: TopAlbumsUseCase,
+    private val getStringsUseCase: GetStringsUseCase
 ) : BaseVM() {
 
 
@@ -50,6 +52,7 @@ class AlbumsVM(
                         albumList.postValue(data.data.topalbums.albums)
                     }
                     else -> {
+                        errorMessage.postValue(getStringsUseCase.getFailedToGetAlbumString())
                     }
                 }
             }
@@ -74,6 +77,7 @@ class AlbumsVM(
                         albumDetail.postValue(data.data.album)
                     }
                     else -> {
+                        errorMessage.postValue(getStringsUseCase.getFailedToGetAlbumString())
                     }
                 }
             }
