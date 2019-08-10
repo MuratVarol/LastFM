@@ -19,7 +19,8 @@ class MainApplication : Application() {
                 networkModule,
                 repositoryModule,
                 useCaseModule,
-                viewModelModule
+                viewModelModule,
+                databaseModule
             )
         )
     }

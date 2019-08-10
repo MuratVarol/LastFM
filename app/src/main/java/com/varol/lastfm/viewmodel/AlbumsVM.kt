@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.varol.lastfm.base.BaseVM
+import com.varol.lastfm.data.local.model.AlbumDo
 import com.varol.lastfm.data.local.model.AlbumModel
 import com.varol.lastfm.data.local.model.AlbumSearchModel
 import com.varol.lastfm.data.local.model.AlbumWithTracksModel
@@ -22,14 +23,19 @@ class AlbumsVM(
 
     val albumList = MutableLiveData<List<AlbumModel>>()
 
-    val albumDetail = MutableLiveData<AlbumWithTracksModel>()
     val selectedAlbum = MutableLiveData<AlbumModel>()
+
+    val storedAlbums = MutableLiveData<List<AlbumDo>>()
+
+    val albumDetail = MutableLiveData<AlbumWithTracksModel>()
 
     val isLoading = SingleLiveEvent<Boolean>()
 
-    val itemClickListener = object : ItemClickListener<AlbumModel> {
-        override fun onItemClick(view: View, item: AlbumModel, position: Int) {
-            Log.i("AlbumModel: ", item.toString())
+    val isEmptyAlbumList = SingleLiveEvent<Boolean>()
+
+    val savedAlbumSelectListener = object : ItemClickListener<AlbumWithTracksModel> {
+        override fun onItemClick(view: View, item: AlbumWithTracksModel, position: Int) {
+            Log.i("AlbumWithTracksModel: ", item.toString())
         }
     }
 
@@ -45,7 +51,7 @@ class AlbumsVM(
             .getTopAlbums(artist)
             .observeOn(getBackgroundScheduler())
             .subscribeOn(getBackgroundScheduler())
-            .subscribe { data ->
+            .subscribe({ data ->
                 isLoading.postValue(false)
                 when (data) {
                     is DataHolder.Success -> {
@@ -56,6 +62,9 @@ class AlbumsVM(
                     }
                 }
             }
+                , {
+                    errorMessage.postValue(getStringsUseCase.getFailedToGetAlbumString())
+                })
         disposables.add(disposable)
     }
 
@@ -68,19 +77,47 @@ class AlbumsVM(
             .getAlbumDetail(albumSearch)
             .observeOn(getBackgroundScheduler())
             .subscribeOn(getBackgroundScheduler())
-            .subscribe { data ->
+            .subscribe({ data ->
 
                 isLoading.postValue(false)
 
                 when (data) {
                     is DataHolder.Success -> {
-                        albumDetail.postValue(data.data.album)
+                        val albumList = data.data.album
+                        albumList?.let {
+                            albumDetail.postValue(data.data.album)
+                        } ?: run {
+                            errorMessage.postValue(getStringsUseCase.getFailedToGetAlbumString())
+                        }
                     }
                     else -> {
                         errorMessage.postValue(getStringsUseCase.getFailedToGetAlbumString())
                     }
                 }
             }
+                , {
+                    errorMessage.postValue(getStringsUseCase.getFailedToGetAlbumString())
+                })
+        disposables.add(disposable)
+    }
+
+    fun getStoredAlbums() {
+        isLoading.postValue(true)
+
+        val disposable = getTopAlbumsUseCase
+            .getStoredAlbums()
+            .observeOn(getBackgroundScheduler())
+            .subscribeOn(getBackgroundScheduler())
+            .subscribe({ albumList ->
+                if (albumList.isNotEmpty()) {
+                    storedAlbums.postValue(albumList)
+                } else {
+                    isEmptyAlbumList.postValue(true)
+                }
+            }, {
+                errorMessage.postValue(getStringsUseCase.getFailedToGetAlbumString())
+            })
+
         disposables.add(disposable)
     }
 

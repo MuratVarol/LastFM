@@ -21,6 +21,8 @@ class StoredAlbumsFragment :
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
+        viewModel.getStoredAlbums()
+
         return binding.root
     }
 

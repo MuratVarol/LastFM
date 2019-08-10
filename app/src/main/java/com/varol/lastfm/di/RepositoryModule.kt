@@ -8,5 +8,5 @@ import org.koin.dsl.module.module
 
 val repositoryModule: Module = module {
     single { ArtistRepository(get()) }
-    single { AlbumRepository(get()) }
+    single { AlbumRepository(get(), get()) }
 }

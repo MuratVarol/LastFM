@@ -1,10 +1,12 @@
 package com.varol.lastfm.usecase
 
+import com.varol.lastfm.data.local.model.AlbumDo
 import com.varol.lastfm.data.local.model.AlbumSearchModel
 import com.varol.lastfm.data.remote.BaseAlbumsResponse
 import com.varol.lastfm.data.remote.BaseTracksResponse
 import com.varol.lastfm.data.remote.DataHolder
 import com.varol.lastfm.data.remote.repository.AlbumRepository
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 class TopAlbumsUseCase(
@@ -16,5 +18,9 @@ class TopAlbumsUseCase(
 
     fun getAlbumDetail(albumSearch: AlbumSearchModel): Single<DataHolder<BaseTracksResponse>> {
         return albumRepository.getAlbumInfo(albumSearch)
+    }
+
+    fun getStoredAlbums(): Flowable<List<AlbumDo>> {
+        return albumRepository.getAllSavedAlbums()
     }
 }
