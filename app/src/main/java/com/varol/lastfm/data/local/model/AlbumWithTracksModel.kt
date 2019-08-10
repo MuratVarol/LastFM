@@ -17,7 +17,7 @@ data class AlbumWithTracksModel(
     val artist: String?,
 
     @SerializedName("image")
-    val image: List<ImageModel>,
+    val image: List<ImageModel?>?,
 
     @SerializedName("tracks")
     val tracks: TrackList?

@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="model"
-            type="com.varol.lastfm.data.local.model.TrackModel" />
+            name="track_name"
+            type="java.lang.String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:layout_marginEnd="24dp"
-            android:text="@{model.name}"
+            android:text="@{track_name}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Track1" />

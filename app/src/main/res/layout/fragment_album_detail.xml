@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:imageUrl="@{viewModel.albumDetail.image[3].text}"
+            app:imageUrl="@{viewModel.albumDetail.image}"
             app:layout_constraintDimensionRatio="3:2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -57,14 +57,25 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             app:itemLayoutId="@{@layout/item_tracklist_layout}"
-            app:itemList="@{viewModel.albumDetail.tracks.track}"
+            app:itemList="@{viewModel.albumDetail.tracks}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_db_transaction"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_track_artist"
             app:spanCount="2"
             tools:listitem="@layout/item_tracklist_layout" />
+
+
+        <Button
+            android:id="@+id/btn_db_transaction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.saveSelectedAlbumToDatabase()}"
+            android:text="Save To Database"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
         <ProgressBar

@@ -23,4 +23,8 @@ class TopAlbumsUseCase(
     fun getStoredAlbums(): Flowable<List<AlbumDo>> {
         return albumRepository.getAllSavedAlbums()
     }
+
+    fun saveAlbum(albumDo: AlbumDo): Long? {
+        return albumRepository.saveAlbum(albumDo)
+    }
 }

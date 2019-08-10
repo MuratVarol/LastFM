@@ -1,23 +1,24 @@
 package com.varol.lastfm.viewmodel
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.varol.lastfm.base.BaseVM
 import com.varol.lastfm.data.local.model.AlbumDo
 import com.varol.lastfm.data.local.model.AlbumModel
 import com.varol.lastfm.data.local.model.AlbumSearchModel
-import com.varol.lastfm.data.local.model.AlbumWithTracksModel
 import com.varol.lastfm.data.remote.DataHolder
+import com.varol.lastfm.usecase.AlbumDbMapperUseCase
 import com.varol.lastfm.usecase.GetStringsUseCase
 import com.varol.lastfm.usecase.TopAlbumsUseCase
 import com.varol.lastfm.util.binding_adapters.SingleLiveEvent
 import com.varol.lastfm.util.listener.ItemClickListener
+import io.reactivex.Observable
 
 
 class AlbumsVM(
     private val getTopAlbumsUseCase: TopAlbumsUseCase,
-    private val getStringsUseCase: GetStringsUseCase
+    private val getStringsUseCase: GetStringsUseCase,
+    private val albumDbMapperUseCase: AlbumDbMapperUseCase
 ) : BaseVM() {
 
 
@@ -27,15 +28,15 @@ class AlbumsVM(
 
     val storedAlbums = MutableLiveData<List<AlbumDo>>()
 
-    val albumDetail = MutableLiveData<AlbumWithTracksModel>()
+    val albumDetail = MutableLiveData<AlbumDo>()
 
     val isLoading = SingleLiveEvent<Boolean>()
 
     val isEmptyAlbumList = SingleLiveEvent<Boolean>()
 
-    val savedAlbumSelectListener = object : ItemClickListener<AlbumWithTracksModel> {
-        override fun onItemClick(view: View, item: AlbumWithTracksModel, position: Int) {
-            Log.i("AlbumWithTracksModel: ", item.toString())
+    val savedAlbumSelectListener = object : ItemClickListener<AlbumDo> {
+        override fun onItemClick(view: View, item: AlbumDo, position: Int) {
+            albumDetail.postValue(item)
         }
     }
 
@@ -85,7 +86,8 @@ class AlbumsVM(
                     is DataHolder.Success -> {
                         val albumList = data.data.album
                         albumList?.let {
-                            albumDetail.postValue(data.data.album)
+                            val mappedAlbum = albumDbMapperUseCase.mapAlbumWithTracksToAlbumDo(it)
+                            albumDetail.postValue(mappedAlbum)
                         } ?: run {
                             errorMessage.postValue(getStringsUseCase.getFailedToGetAlbumString())
                         }
@@ -119,6 +121,26 @@ class AlbumsVM(
             })
 
         disposables.add(disposable)
+    }
+
+    fun saveSelectedAlbumToDatabase() {
+
+        albumDetail.value?.let { album ->
+            val disposable = Observable.just(
+                getTopAlbumsUseCase.saveAlbum(album)
+            ).observeOn(getBackgroundScheduler())
+                .subscribeOn(getBackgroundScheduler())
+                .subscribe { rowCount ->
+                    rowCount?.let {
+                        isEmptyAlbumList.postValue(false)
+
+                    }
+                }
+
+            disposables.add(disposable)
+        }
+
+
     }
 
 
