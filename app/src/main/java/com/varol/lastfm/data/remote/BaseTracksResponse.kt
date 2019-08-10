@@ -13,7 +13,7 @@ data class BaseTracksResponse(
     val message: String?,
 
     @SerializedName("album")
-    val album: AlbumWithTracksModel
+    val album: AlbumWithTracksModel?
 
 
 )
