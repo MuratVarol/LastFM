@@ -13,8 +13,8 @@ class MainActivity : BaseActivity<MainVM, ActivityMainBinding>(MainVM::class) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        loadFragment(R.id.container_main, StoredAlbumsFragment(), false)
+        if (savedInstanceState == null)
+            loadFragment(R.id.container_main, SearchArtistFragment(), false)
 
     }
 }
