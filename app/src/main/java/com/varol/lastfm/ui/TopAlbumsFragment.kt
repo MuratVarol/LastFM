@@ -9,6 +9,7 @@ import com.varol.lastfm.base.BaseFragment
 import com.varol.lastfm.data.local.model.AlbumSearchModel
 import com.varol.lastfm.databinding.FragmentTopAlbumsBinding
 import com.varol.lastfm.extension.ifLet
+import com.varol.lastfm.extension.informToast
 import com.varol.lastfm.viewmodel.AlbumsVM
 import observeNonNull
 
@@ -33,6 +34,8 @@ class TopAlbumsFragment :
         }
 
         subscribeSelectedAlbum()
+
+        subscribeErrorMessage()
 
         return binding.root
     }
@@ -62,6 +65,12 @@ class TopAlbumsFragment :
                 loadFragment(R.id.container_main, albumDetailFragment, fragmentManager, true)
             }
 
+        }
+    }
+
+    private fun subscribeErrorMessage() {
+        viewModel.errorMessage.observeNonNull(this) { errorMessage ->
+            informToast(errorMessage)
         }
     }
 

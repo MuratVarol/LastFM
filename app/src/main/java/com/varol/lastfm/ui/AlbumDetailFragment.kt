@@ -9,7 +9,9 @@ import com.varol.lastfm.base.BaseFragment
 import com.varol.lastfm.data.local.model.AlbumDo
 import com.varol.lastfm.data.local.model.AlbumSearchModel
 import com.varol.lastfm.databinding.FragmentAlbumDetailBinding
+import com.varol.lastfm.extension.informToast
 import com.varol.lastfm.viewmodel.AlbumsVM
+import observeNonNull
 
 
 const val KEY_ALBUM_INFO = "key.info.album"
@@ -35,6 +37,8 @@ class AlbumDetailFragment :
             viewModel.albumDetail.postValue(album)
             viewModel.isSelectedAlbumStored(album)
         }
+
+        subscribeErrorMessage()
 
         return binding.root
     }
@@ -65,4 +69,10 @@ class AlbumDetailFragment :
     private fun getSelectedAlbumDo(): AlbumDo? =
         arguments?.getParcelable(KEY_ALBUM_DO)
 
+
+    private fun subscribeErrorMessage() {
+        viewModel.errorMessage.observeNonNull(this) { errorMessage ->
+            informToast(errorMessage)
+        }
+    }
 }

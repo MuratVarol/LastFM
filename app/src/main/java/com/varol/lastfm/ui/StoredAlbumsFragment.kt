@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import com.varol.lastfm.R
 import com.varol.lastfm.base.BaseFragment
 import com.varol.lastfm.databinding.FragmentStoredAlbumsBinding
+import com.varol.lastfm.extension.informToast
 import com.varol.lastfm.viewmodel.AlbumsVM
 import observe
+import observeNonNull
 
 class StoredAlbumsFragment :
     BaseFragment<AlbumsVM, FragmentStoredAlbumsBinding>(AlbumsVM::class) {
@@ -23,6 +25,8 @@ class StoredAlbumsFragment :
         super.onCreateView(inflater, container, savedInstanceState)
 
         subscribeSelectedAlbum()
+
+        subscribeErrorMessage()
 
         // safe call (?) could give warning as unnecessary
         // experienced NPE before
@@ -45,6 +49,13 @@ class StoredAlbumsFragment :
     override fun onResume() {
         super.onResume()
         viewModel.getStoredAlbums()
+    }
+
+
+    private fun subscribeErrorMessage() {
+        viewModel.errorMessage.observeNonNull(this) { errorMessage ->
+            informToast(errorMessage)
+        }
     }
 
 
