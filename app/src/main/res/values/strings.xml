@@ -7,6 +7,7 @@
 
     <string name="failed_album_fetch">Getting Album Informartion Failed!</string>
     <string name="search_failed">Search Failed!</string>
+    <string name="no_artist_found">Could Find Any Artist!</string>
     <string name="tracks_count">Count Of Tracks:</string>
     <string name="empty_db_warning">DATABASE IS EMPTY,\n SEARCH AND ADD ALBUM</string>
     <string name="save_to_database">Save To Database</string>
