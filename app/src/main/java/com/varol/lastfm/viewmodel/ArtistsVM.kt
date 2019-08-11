@@ -64,7 +64,11 @@ class ArtistsVM(
                             artistsList?.let {
 
                                 if (pageIndex == INIT_PAGE_INDEX) {
-                                    artistSearchList.postValue(artistsList.toMutableList())
+                                    if (!artistsList.isNullOrEmpty()) {
+                                        artistSearchList.postValue(artistsList.toMutableList())
+                                    } else {
+                                        errorMessage.postValue(getStringsUseCase.getNoArtistFoundString())
+                                    }
                                     requestLock = false
                                 } else if (pageIndex > INIT_PAGE_INDEX && !requestLock) {
                                     //keep below line, could be useful later
