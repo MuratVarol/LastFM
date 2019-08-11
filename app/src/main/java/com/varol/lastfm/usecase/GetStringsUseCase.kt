@@ -8,4 +8,5 @@ class GetStringsUseCase(
 ) {
     fun getSearchFailedString() = context.getString(R.string.search_failed)
     fun getFailedToGetAlbumString() = context.getString(R.string.failed_album_fetch)
+    fun getNoArtistFoundString() = context.getString(R.string.no_artist_found)
 }
