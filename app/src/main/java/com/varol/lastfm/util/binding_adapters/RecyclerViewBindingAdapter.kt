@@ -18,8 +18,7 @@ import com.varol.lastfm.util.listener.ItemClickListener
         "dividerEnabled",
         "itemClickListener",
         "dividerDrawableId",
-        "dividerHorizontalDrawableId",
-        "snapEnabled"
+        "dividerHorizontalDrawableId"
     ],
     requireAll = false
 )
@@ -30,8 +29,7 @@ fun bindRecyclerView(
     dividerEnabled: Boolean,
     itemClickListener: ItemClickListener<Nothing>?,
     dividerDrawableId: Drawable?,
-    dividerHorizontalDrawableId: Drawable?,
-    snapEnabled: Boolean
+    dividerHorizontalDrawableId: Drawable?
 ) {
     if (itemList == null) return
     clearDecorations(recyclerView)
@@ -44,7 +42,6 @@ fun bindRecyclerView(
         val adapter = recyclerView.adapter as BaseRecyclerAdapter<*>
         adapter.updateData(itemList)
     }
-    addSnapHelper(recyclerView, snapEnabled)
     showDefaultDivider(dividerEnabled, recyclerView)
     dividerDrawableId?.let { addDividerDrawable(dividerDrawableId, recyclerView) }
     dividerHorizontalDrawableId?.let {
