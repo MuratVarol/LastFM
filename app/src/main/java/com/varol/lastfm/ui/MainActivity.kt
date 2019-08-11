@@ -14,7 +14,7 @@ class MainActivity : BaseActivity<MainVM, ActivityMainBinding>(MainVM::class) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null)
-            loadFragment(R.id.container_main, SearchArtistFragment(), false)
+            loadFragment(R.id.container_main, StoredAlbumsFragment(), false)
 
     }
 }
