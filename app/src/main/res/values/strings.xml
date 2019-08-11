@@ -7,7 +7,9 @@
 
     <string name="failed_album_fetch">Getting Album Informartion Failed!</string>
     <string name="search_failed">Search Failed!</string>
-    <string name="tracks_count">Number of tracks:</string>
+    <string name="tracks_count">Count Of Tracks:</string>
     <string name="empty_db_warning">DATABASE IS EMPTY,\n SEARCH AND ADD ALBUM</string>
+    <string name="save_to_database">Save To Database</string>
+    <string name="delete_from_database">Delete From Database</string>
 
 </resources>
