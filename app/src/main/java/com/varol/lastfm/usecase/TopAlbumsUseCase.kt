@@ -27,4 +27,12 @@ class TopAlbumsUseCase(
     fun saveAlbum(albumDo: AlbumDo): Long? {
         return albumRepository.saveAlbum(albumDo)
     }
+
+    fun deleteAlbum(albumDo: AlbumDo): Int? {
+        return albumRepository.deleteAlbum(albumDo)
+    }
+
+    fun isSelectedAlbumStored(albumDo: AlbumDo): Single<AlbumDo?> {
+        return albumRepository.isSelectedAlbumSaved(albumDo.mbid)
+    }
 }

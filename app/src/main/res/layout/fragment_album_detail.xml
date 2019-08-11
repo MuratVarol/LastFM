@@ -71,8 +71,8 @@
             android:id="@+id/btn_db_transaction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.saveSelectedAlbumToDatabase()}"
-            android:text="Save To Database"
+            android:onClick="@{() -> viewModel.handleAlbumStorage()}"
+            android:text="@{viewModel.isSelectedAlbumIsStored ? @string/delete_from_database : @string/save_to_database}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

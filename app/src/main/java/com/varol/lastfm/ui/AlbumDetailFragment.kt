@@ -33,6 +33,7 @@ class AlbumDetailFragment :
 
         getSelectedAlbumDo()?.let { album ->
             viewModel.albumDetail.postValue(album)
+            viewModel.isSelectedAlbumStored(album)
         }
 
         return binding.root

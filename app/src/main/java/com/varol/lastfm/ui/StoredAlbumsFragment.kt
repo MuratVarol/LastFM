@@ -22,10 +22,10 @@ class StoredAlbumsFragment :
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        viewModel.getStoredAlbums()
-
         subscribeSelectedAlbum()
 
+        // safe call (?) could give warning as unnecessary
+        // experienced NPE before
         binding.ivSearch?.setOnClickListener {
             loadFragment(R.id.container_main, SearchArtistFragment(), fragmentManager, true)
         }
@@ -40,6 +40,11 @@ class StoredAlbumsFragment :
                 loadFragment(R.id.container_main, albumDetailFragment, fragmentManager, true)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getStoredAlbums()
     }
 
 

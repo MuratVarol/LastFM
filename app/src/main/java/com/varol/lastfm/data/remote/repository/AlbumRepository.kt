@@ -38,4 +38,12 @@ class AlbumRepository(
         return albumsDao.insert(albumDo)
     }
 
+    fun deleteAlbum(albumDo: AlbumDo): Int {
+        return albumsDao.delete(albumDo)
+    }
+
+    fun isSelectedAlbumSaved(mbid: String): Single<AlbumDo?> {
+        return albumsDao.getSelectedAlbum(mbid)
+    }
+
 }

@@ -13,6 +13,6 @@ interface AlbumsDao : BaseDao<AlbumDo> {
 
 
     @Query("SELECT * FROM tb_albums WHERE id==:albumId")
-    fun getSelectedAlbum(albumId: String): Single<AlbumDo>
+    fun getSelectedAlbum(albumId: String): Single<AlbumDo?>
 
 }

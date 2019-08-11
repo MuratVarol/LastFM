@@ -34,6 +34,8 @@ class AlbumsVM(
 
     val isEmptyAlbumList = SingleLiveEvent<Boolean>()
 
+    val isSelectedAlbumIsStored = SingleLiveEvent<Boolean>()
+
     val savedAlbumSelectListener = object : ItemClickListener<AlbumDo> {
         override fun onItemClick(view: View, item: AlbumDo, position: Int) {
             albumDetail.postValue(item)
@@ -45,6 +47,7 @@ class AlbumsVM(
             selectedAlbum.postValue(item)
         }
     }
+
 
     fun getTopAlbums(artist: String) {
         isLoading.postValue(true)
@@ -87,6 +90,7 @@ class AlbumsVM(
                         val albumList = data.data.album
                         albumList?.let {
                             val mappedAlbum = albumDbMapperUseCase.mapAlbumWithTracksToAlbumDo(it)
+                            isSelectedAlbumStored(mappedAlbum)
                             albumDetail.postValue(mappedAlbum)
                         } ?: run {
                             errorMessage.postValue(getStringsUseCase.getFailedToGetAlbumString())
@@ -111,10 +115,15 @@ class AlbumsVM(
             .observeOn(getBackgroundScheduler())
             .subscribeOn(getBackgroundScheduler())
             .subscribe({ albumList ->
+
+                isLoading.postValue(false)
+
                 if (albumList.isNotEmpty()) {
                     storedAlbums.postValue(albumList)
+                    isEmptyAlbumList.postValue(false)
                 } else {
                     isEmptyAlbumList.postValue(true)
+                    storedAlbums.postValue(emptyList())
                 }
             }, {
                 errorMessage.postValue(getStringsUseCase.getFailedToGetAlbumString())
@@ -123,24 +132,76 @@ class AlbumsVM(
         disposables.add(disposable)
     }
 
-    fun saveSelectedAlbumToDatabase() {
+    fun isSelectedAlbumStored(album: AlbumDo) {
+        val disposable = getTopAlbumsUseCase.isSelectedAlbumStored(album)
+            .subscribeOn(getBackgroundScheduler())
+            .observeOn(getBackgroundScheduler())
+            .subscribe({ album ->
+                album?.let {
+
+                    isSelectedAlbumIsStored.postValue(true)
+                } ?: run {
+                    isSelectedAlbumIsStored.postValue(false)
+                }
+            },
+                {
+                    isSelectedAlbumIsStored.postValue(false)
+                })
+
+        disposables.add(disposable)
+    }
+
+    fun handleAlbumStorage() {
+
+        if (isSelectedAlbumIsStored.value == true) {
+            deleteStoredAlbumFromDatabase()
+        } else {
+            saveSelectedAlbumToDatabase()
+        }
+
+    }
+
+
+    private fun saveSelectedAlbumToDatabase() {
+
+        albumDetail.value?.let { album ->
+            val disposable =
+                Observable.just(
+                    getTopAlbumsUseCase.saveAlbum(album)
+                )
+                    .observeOn(getBackgroundScheduler())
+                    .subscribeOn(getBackgroundScheduler())
+                    .subscribe { rowCount ->
+                        getStoredAlbums()
+                        rowCount?.let {
+                            isEmptyAlbumList.postValue(false)
+                            isSelectedAlbumIsStored.postValue(true)
+                        }
+                    }
+            disposables.add(disposable)
+        } ?: run {
+
+        }
+    }
+
+    private fun deleteStoredAlbumFromDatabase() {
 
         albumDetail.value?.let { album ->
             val disposable = Observable.just(
-                getTopAlbumsUseCase.saveAlbum(album)
-            ).observeOn(getBackgroundScheduler())
+                getTopAlbumsUseCase.deleteAlbum(album)
+            )
                 .subscribeOn(getBackgroundScheduler())
-                .subscribe { rowCount ->
-                    rowCount?.let {
-                        isEmptyAlbumList.postValue(false)
-
-                    }
+                .observeOn(getBackgroundScheduler())
+                .subscribe {
+                    isSelectedAlbumIsStored.postValue(false)
+                    getStoredAlbums()
                 }
 
             disposables.add(disposable)
+
+        } ?: run {
+            isSelectedAlbumIsStored.postValue(false)
         }
-
-
     }
 
 
