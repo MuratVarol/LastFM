@@ -10,7 +10,7 @@ private const val LIMIT_QUERY = "limit"
 private const val FORMAT_QUERY = "format"
 private const val FORMAT_VALUE = "json"
 
-private const val LIMIT = 40.toString()
+private const val LIMIT = 20.toString()
 
 /**
  * OkHttp interceptor for providing API_KEY to API requests for every requests.
