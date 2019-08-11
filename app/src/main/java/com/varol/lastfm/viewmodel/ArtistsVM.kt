@@ -25,7 +25,6 @@ class ArtistsVM(
 
     val isLoading = SingleLiveEvent<Boolean>()
 
-    private var requestLock = false
 
     val itemClickListener = object : ItemClickListener<ArtistModel> {
         override fun onItemClick(view: View, item: ArtistModel, position: Int) {
@@ -46,7 +45,6 @@ class ArtistsVM(
         searchText.value?.let { name ->
 
             isLoading.postValue(true)
-            requestLock = true
 
             val disposable = searchArtistUseCase
                 .searchArtist(name, pageIndex)
@@ -54,37 +52,29 @@ class ArtistsVM(
                 .subscribeOn(getMainThreadScheduler())
                 .subscribe { data ->
 
-                    requestLock = false
-
                     when (data) {
-
                         is DataHolder.Success -> {
 
                             val artistsList = data.data.results?.artistmatches?.artist
                             artistsList?.let {
 
-                                if (pageIndex == INIT_PAGE_INDEX) {
-                                    if (!artistsList.isNullOrEmpty()) {
+                                when {
+                                    pageIndex == INIT_PAGE_INDEX -> if (!artistsList.isNullOrEmpty()) {
                                         artistSearchList.postValue(artistsList.toMutableList())
                                     } else {
                                         errorMessage.postValue(getStringsUseCase.getNoArtistFoundString())
                                     }
-                                    requestLock = false
-                                } else if (pageIndex > INIT_PAGE_INDEX && !requestLock) {
-                                    //keep below line, could be useful later
-//                                    if (artistSearchList.value?.last()?.mbid != artistsList.last().mbid)
-                                    artistSearchList += artistsList.toMutableList()
-                                    requestLock = false
+                                    pageIndex > INIT_PAGE_INDEX -> //keep below line, could be useful later
+                                        //                                    if (artistSearchList.value?.last()?.mbid != artistsList.last().mbid)
+                                        artistSearchList += artistsList.toMutableList()
                                 }
                             } ?: run {
                                 errorMessage.postValue(getStringsUseCase.getSearchFailedString())
-                                requestLock = false
                                 return@subscribe
                             }
                         }
                         else -> {
                             errorMessage.postValue(getStringsUseCase.getSearchFailedString())
-                            requestLock = false
                         }
                     }
                     isLoading.postValue(false)
