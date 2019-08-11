@@ -132,8 +132,8 @@ class AlbumsVM(
         disposables.add(disposable)
     }
 
-    fun isSelectedAlbumStored(album: AlbumDo) {
-        val disposable = getTopAlbumsUseCase.isSelectedAlbumStored(album)
+    fun isSelectedAlbumStored(albumDo: AlbumDo) {
+        val disposable = getTopAlbumsUseCase.isSelectedAlbumStored(albumDo)
             .subscribeOn(getBackgroundScheduler())
             .observeOn(getBackgroundScheduler())
             .subscribe({ album ->
