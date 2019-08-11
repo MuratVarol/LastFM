@@ -37,10 +37,10 @@
 
         <ImageView
             android:id="@+id/iv_search"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/width_icon"
+            android:layout_height="@dimen/height_icon"
             android:onClick="@{() -> viewModel.searchArtist()}"
-            android:src="@drawable/chuck_ic_https_grey_24dp"
+            android:src="@drawable/ic_right_arrow"
             android:focusable="true"
             app:layout_constraintBottom_toTopOf="@+id/rv_artists"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,8 +66,8 @@
 
         <ProgressBar
             android:id="@+id/pb_loading"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/pb_size"
+            android:layout_height="@dimen/pb_size"
             android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

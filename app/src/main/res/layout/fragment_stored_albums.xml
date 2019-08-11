@@ -21,10 +21,11 @@
 
         <ImageView
             android:id="@+id/iv_search"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/width_icon"
+            android:layout_height="@dimen/height_icon"
             android:focusable="true"
-            android:src="@drawable/chuck_ic_https_grey_24dp"
+            android:padding="@dimen/padding_small"
+            android:src="@drawable/ic_search"
             app:layout_constraintBottom_toTopOf="@+id/rv_albums"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
