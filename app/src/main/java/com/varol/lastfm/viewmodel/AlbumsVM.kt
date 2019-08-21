@@ -1,7 +1,6 @@
 package com.varol.lastfm.viewmodel
 
 import android.view.View
-import androidx.lifecycle.MutableLiveData
 import com.varol.lastfm.base.BaseVM
 import com.varol.lastfm.data.local.model.AlbumDo
 import com.varol.lastfm.data.local.model.AlbumModel
@@ -22,13 +21,13 @@ class AlbumsVM(
 ) : BaseVM() {
 
 
-    val albumList = MutableLiveData<List<AlbumModel>>()
+    val albumList = SingleLiveEvent<List<AlbumModel>>()
 
-    val selectedAlbum = MutableLiveData<AlbumModel>()
+    val selectedAlbum = SingleLiveEvent<AlbumModel>()
 
-    val storedAlbums = MutableLiveData<List<AlbumDo>>()
+    val storedAlbums = SingleLiveEvent<List<AlbumDo>>()
 
-    val albumDetail = MutableLiveData<AlbumDo>()
+    val albumDetail = SingleLiveEvent<AlbumDo>()
 
     val isLoading = SingleLiveEvent<Boolean>()
 

@@ -21,7 +21,7 @@ class ArtistsVM(
 
     val artistSearchList = MutableLiveData<MutableList<ArtistModel>>()
 
-    val selectedArtist = MutableLiveData<String>()
+    val selectedArtist = SingleLiveEvent<String>()
 
     val isLoading = SingleLiveEvent<Boolean>()
 

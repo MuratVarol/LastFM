@@ -44,7 +44,7 @@ abstract class BaseFragment<out VM : ViewModel, DB : ViewDataBinding>(viewModelC
         if (addToBackStack) {
             ft?.addToBackStack("")
         }
-        ft?.add(containerId, fragment)?.commit()
+        ft?.replace(containerId, fragment)?.commit()
     }
 
     fun clearBackStack(manager: FragmentManager?) {
