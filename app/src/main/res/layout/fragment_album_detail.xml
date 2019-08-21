@@ -58,7 +58,7 @@
             android:layout_height="0dp"
             app:itemLayoutId="@{@layout/item_tracklist_layout}"
             app:itemList="@{viewModel.albumDetail.tracks}"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/btn_db_transaction"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
